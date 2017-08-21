@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="16dp"
+    >
+
+    <ImageView
+        android:layout_width="@dimen/list_item_height"
+        android:layout_height="@dimen/list_item_height"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/imageResourceID"
+        />
+
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:background = "@color/category_numbers"
+        android:id="@+id/list_item_text"
+        >
+
+        <TextView
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ENGLISH"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/defaultTranslation"
+            >
+        </TextView>
+
+        <TextView
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:id="@+id/miwokTranslation"
+            android:text="MIWOK"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:layout_marginLeft="16dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/defaultTranslation"
+            >
+        </TextView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/play"
+            android:layout_centerVertical="true"
+            android:id="@+id/btnPlay"/>
+    </RelativeLayout>
+
+</LinearLayout>
