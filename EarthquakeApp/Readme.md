@@ -1,1 +1,0 @@
-This App is inspired by Udacity course on Android Networking.
