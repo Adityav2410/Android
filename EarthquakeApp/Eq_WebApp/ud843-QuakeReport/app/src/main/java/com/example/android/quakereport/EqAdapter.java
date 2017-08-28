@@ -13,23 +13,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 /**
  * Created by adityav on 8/21/17.
  */
 
-public class EqAdapter extends ArrayAdapter<EqInfo>{
+public class EqAdapter extends BaseAdapter {
 
     DecimalFormat decimalFormat;
-    public EqAdapter(@NonNull Context context, @NonNull List<EqInfo> objects) {
-        super(context, 0, objects);
+    private ArrayList<EqInfo> eqInfos;
+    private LayoutInflater inflater;
+    private Context mActivityContext = null;
+
+    public EqAdapter( Context context,  ArrayList<EqInfo> eqInfos) {
+        this.eqInfos = eqInfos;
+        inflater = LayoutInflater.from(context);
         decimalFormat  =   new DecimalFormat("0.0");
+        mActivityContext = context;
     }
 
     private int getBackgroundColor(Double magnitude){
@@ -47,18 +56,34 @@ public class EqAdapter extends ArrayAdapter<EqInfo>{
             case 9: magnitudeColorResourceId=(R.color.magnitude9);   break;
             default: magnitudeColorResourceId=(R.color.magnitude10plus);
         }
-        return ContextCompat.getColor(getContext(), magnitudeColorResourceId);
+        return ContextCompat.getColor(mActivityContext, magnitudeColorResourceId);
     }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public int getCount() {
+        return eqInfos.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return eqInfos.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        System.out.println("Getting view for position "+ position);
 
         View listItemView = convertView;
         if(listItemView == null)
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item,parent, false);
+            listItemView = inflater.inflate(R.layout.list_item, null);
 
-        EqInfo      currEqInfo          =       getItem(position);
+        EqInfo      currEqInfo          =       (EqInfo)    getItem(position);
         TextView    tv_magnitude        =       (TextView)  listItemView.findViewById(R.id.tv_magnitude);
         TextView    tv_citySecondary    =       (TextView)  listItemView.findViewById(R.id.tv_citySecondary);
         TextView    tv_cityPrimary      =       (TextView)  listItemView.findViewById(R.id.tv_cityPrimary);
@@ -77,4 +102,13 @@ public class EqAdapter extends ArrayAdapter<EqInfo>{
         tv_time.setText(String.valueOf(currEqInfo.getTime()));
         return listItemView;
     }
+
+
+
+    public void setData(ArrayList<EqInfo> additionalEqInfos){
+        eqInfos.addAll(additionalEqInfos);
+        System.out.println("DEZBUG: Data Added: "+ getCount() );
+        notifyDataSetChanged();
+    }
+
 }
